@@ -1,0 +1,22 @@
+{
+    "flutter": {
+        "platforms": {
+            "android": {
+                "default": {
+                    "projectId": "youbloom-task",
+                    "appId": "1:326495444342:android:78f7c506483cfaf92d6e57",
+                    "fileOutput": "android/app/google-services.json"
+                }
+            },
+            "dart": {
+                "lib/firebase_options.dart": {
+                    "projectId": "youbloom-task",
+                    "configurations": {
+                        "android": "1:326495444342:android:78f7c506483cfaf92d6e57",
+                        "web": "1:326495444342:web:30cf852584bad2472d6e57"
+                    }
+                }
+            }
+        }
+    }
+}

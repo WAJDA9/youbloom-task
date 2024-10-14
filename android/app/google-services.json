@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "326495444342",
+    "project_id": "youbloom-task",
+    "storage_bucket": "youbloom-task.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:326495444342:android:78f7c506483cfaf92d6e57",
+        "android_client_info": {
+          "package_name": "com.youbloom.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCWrbWvC9I9k9-or-V4c2-DppoAE9fBook"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
