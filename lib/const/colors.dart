@@ -11,4 +11,5 @@ class AppColors {
   static const Color secondaryTextColor = Colors.white;
   static const Color infoTextColor = Color(0xFF525A64);
   static const Color subtitleColor = Color(0xFF185668);
+  static const Color cardColor = Color(0xFFFAFEFF);
 }

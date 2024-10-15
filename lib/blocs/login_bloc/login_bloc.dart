@@ -62,6 +62,9 @@ class LoginBloc extends Bloc<LoginBlocEvent, LoginState> {
       await FirebaseAuth.instance.signInWithCredential(cred);
       return emit(const AuthSuccess());
     } catch (e) {
+      if (e.toString().contains("verification code from SMS/TOTP is invalid")){
+        return emit(AuthFailure("Invalid verification code"));
+      }
       return emit(AuthFailure(e.toString()));
     }
     

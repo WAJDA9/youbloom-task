@@ -28,7 +28,6 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       body: BlocConsumer<LoginBloc, LoginState>(
         listener: (context, state) {
-          
           if (state is AuthFailure) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
@@ -48,22 +47,17 @@ class _LoginScreenState extends State<LoginScreen> {
             try {
               FirebaseAuth.instance.verifyPhoneNumber(
                 phoneNumber: fullPhoneNumber,
-                verificationCompleted:
-                    (PhoneAuthCredential credential) async {
-                      FirebaseAuth.instance.signInWithCredential(credential);
-                    },
+                verificationCompleted: (PhoneAuthCredential credential) async {
+                  FirebaseAuth.instance.signInWithCredential(credential);
+                },
                 verificationFailed: (FirebaseAuthException e) {
                   if (e.code == 'invalid-phone-number') {
                     throw Exception('The provided phone number is not valid.');
                   }
                 },
                 codeSent: (String verificationId, int? resendToken) async {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => CodeVerificationScreen(
-                                verificationId: verificationId,
-                              )));
+                  Navigator.pushNamed(context, '/code_verification',
+                      arguments: verificationId);
                 },
                 codeAutoRetrievalTimeout: (String verificationId) {},
               );
@@ -86,7 +80,6 @@ class _LoginScreenState extends State<LoginScreen> {
               _stayConnected = state.stayConnected;
             });
           }
-          
         },
         builder: (context, state) {
           if (state is AuthLoading) {

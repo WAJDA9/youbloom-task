@@ -23,6 +23,7 @@ class ApiService {
         .replace(queryParameters: query);
     Map<String, String> header = <String, String>{};
     String? token = await _secureStorage.read(key: "accesstoken");
+
     if (token != null) {
       header = {"Authorization": "Bearer $token"};
     }
@@ -54,11 +55,7 @@ class ApiService {
         break;
     }
     if ([200, 201, 204].contains(response.statusCode)) {
-      if (endPoint == 'player') {
-        return convert.jsonDecode(response.body);
-      } else {
-        return convert.jsonDecode(response.body)["data"];
-      }
+      return convert.jsonDecode(response.body);
     } else if (response.statusCode == 401) {
       // Attempt to refresh the token
     } else {

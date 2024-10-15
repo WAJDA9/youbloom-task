@@ -51,15 +51,15 @@ class _SplashScreenState extends State<SplashScreen> {
             //   );
             // }
           }).catchError((e) {
-            Navigator.pushReplacement(
+            Navigator.pushReplacementNamed(
               context,
-              MaterialPageRoute(builder: (context) =>  LoginScreen()),
+              '/login',
             );
           });
         } else {
-          Navigator.pushReplacement(
+          Navigator.pushReplacementNamed(
             context,
-            MaterialPageRoute(builder: (context) =>  LoginScreen()),
+           '/home',
           );
         }
       },

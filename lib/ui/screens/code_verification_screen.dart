@@ -33,7 +33,7 @@ class _CodeVerificationScreenState extends State<CodeVerificationScreen> {
       body: BlocConsumer<LoginBloc, LoginState>(
         listener: (context, state) {
           if (state is AuthFailure) {
-            print("hello");
+            
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 showCloseIcon: true,
@@ -49,8 +49,7 @@ class _CodeVerificationScreenState extends State<CodeVerificationScreen> {
               ),
             );
           } else if (state is AuthSuccess) {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => HomeScreen()));
+            Navigator.pushReplacementNamed(context, '/home');
           }
         },
         builder: (context, state) {
