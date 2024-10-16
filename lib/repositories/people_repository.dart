@@ -8,11 +8,9 @@ class PeopleRepository {
     final response = await ApiService.get(
       endPoint: AppUrls.people,
     );
-    (response["results"] as List).forEach((element) {
-      print("ghhhh");
+    for (var element in (response["results"] as List)) {
       print(Person.fromJson(element).hairColor);
       people.add(Person.fromJson(element));
-    });
-   
+    }
   }
 }

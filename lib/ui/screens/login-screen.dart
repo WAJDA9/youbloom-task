@@ -64,10 +64,10 @@ class _LoginScreenState extends State<LoginScreen> {
             } catch (e) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  shape: const RoundedRectangleBorder(
+                  shape:  RoundedRectangleBorder(
                     borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(10),
-                      topRight: Radius.circular(10),
+                      topLeft: Radius.circular(10.r),
+                      topRight: Radius.circular(10.r),
                     ),
                   ),
                   content: Text(e.toString()),
@@ -94,11 +94,11 @@ class _LoginScreenState extends State<LoginScreen> {
           } else {
             return SingleChildScrollView(
               child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 30, horizontal: 40.w),
+                padding: EdgeInsets.symmetric(vertical: 30.h, horizontal: 40.w),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    SizedBox(height: 100, child: Image.asset(Assets.logo)),
+                    SizedBox(height: 100.h, child: Image.asset(Assets.logo)),
                     SizedBox(
                       width: double.infinity,
                       child: Text(

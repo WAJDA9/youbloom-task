@@ -15,6 +15,16 @@ class GalacticProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
+      appBar: AppBar(
+        
+        backgroundColor: Colors.transparent,
+        forceMaterialTransparency: true,
+        automaticallyImplyLeading: false,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
+          onPressed: () => Navigator.pop(context),
+        ),
+      ),
       backgroundColor: Colors.black,
       body: Stack(
         children: [
