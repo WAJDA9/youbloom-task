@@ -5,7 +5,7 @@ import 'package:youbloom/blocs/home_page_bloc/home_page_bloc.dart';
 import 'package:youbloom/models/person.dart';
 import 'package:youbloom/ui/screens/code_verification_screen.dart';
 import 'package:youbloom/ui/screens/home_screen.dart';
-import 'package:youbloom/ui/screens/login-screen.dart';
+import 'package:youbloom/ui/screens/login_screen.dart';
 import 'package:youbloom/ui/screens/person_details_screen.dart';
 import 'package:youbloom/ui/screens/splash_screen.dart';
 
@@ -18,7 +18,7 @@ class AppRouter {
         );
       case '/login':
         return MaterialPageRoute(
-          builder: (_) => LoginScreen(),
+          builder: (_) => const LoginScreen(),
         );
       case '/home':
         return MaterialPageRoute(

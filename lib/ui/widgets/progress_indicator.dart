@@ -8,12 +8,12 @@ class LightsaberLoadingIndicator extends StatefulWidget {
   final Duration duration;
 
   const LightsaberLoadingIndicator({
-    Key? key,
+    super.key,
     this.width = 200,
     this.height = 5,
     this.color = AppColors.primaryColor,
     this.duration = const Duration(seconds: 4),
-  }) : super(key: key);
+  });
 
   @override
   _LightsaberLoadingIndicatorState createState() => _LightsaberLoadingIndicatorState();

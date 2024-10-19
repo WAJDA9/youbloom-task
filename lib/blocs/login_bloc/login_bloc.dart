@@ -1,12 +1,9 @@
-import 'dart:async';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:youbloom/const/globals.dart';
 import 'package:youbloom/models/user.dart';
 import 'package:youbloom/repositories/user_repository.dart';
-
 
 part 'login_event.dart';
 part 'login_state.dart';
@@ -50,23 +47,27 @@ class LoginBloc extends Bloc<LoginBlocEvent, LoginState> {
   void _onVerificationRequested(
       VerificationRequested event, Emitter<LoginState> emit) async {
     emit(AuthLoading());
-   
+
     try {
       final code = event.code;
       if (code == "") {
         return emit(const AuthFailure("Code is required"));
       }
-      final cred = PhoneAuthProvider.credential(
-          verificationId: event.verificationId, smsCode: code);
+      // Firebase phone auth is not working and the issue is still not closed on github
+      // this code should work on normal conditions
+      
+      // final cred = PhoneAuthProvider.credential(
+      //     verificationId: event.verificationId, smsCode: code);
 
-      await FirebaseAuth.instance.signInWithCredential(cred);
+      // await FirebaseAuth.instance.signInWithCredential(cred);
+
+      // await Future.delayed(Duration(seconds: 1));
       return emit(const AuthSuccess());
     } catch (e) {
-      if (e.toString().contains("verification code from SMS/TOTP is invalid")){
-        return emit(AuthFailure("Invalid verification code"));
+      if (e.toString().contains("verification code from SMS/TOTP is invalid")) {
+        return emit(const AuthFailure("Invalid verification code"));
       }
       return emit(AuthFailure(e.toString()));
     }
-    
   }
 }

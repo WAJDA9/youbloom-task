@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:youbloom/blocs/login_bloc/login_bloc.dart';
 import 'package:youbloom/const/colors.dart';
-import 'package:youbloom/firebase_options.dart';
 import 'package:youbloom/repositories/user_repository.dart';
 import 'package:youbloom/router/app_router.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -12,7 +11,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatefulWidget {
@@ -48,9 +47,8 @@ class _MyAppState extends State<MyApp> {
               theme: ThemeData(
                 pageTransitionsTheme: PageTransitionsTheme(
                   builders: {
-                    TargetPlatform.android:
-                        NoTransitionPageTransitionsBuilder(),
-                    TargetPlatform.iOS: NoTransitionPageTransitionsBuilder(),
+                    TargetPlatform.android: FadeTransitionBuilder(),
+                    TargetPlatform.iOS: FadeTransitionBuilder(),
                   },
                 ),
                 scaffoldBackgroundColor: AppColors.backGroundColor,
@@ -65,8 +63,7 @@ class _MyAppState extends State<MyApp> {
   }
 }
 
-class NoTransitionPageTransitionsBuilder extends PageTransitionsBuilder {
-  @override
+class FadeTransitionBuilder extends PageTransitionsBuilder {
   @override
   Widget buildTransitions<T>(
     PageRoute<T> route,
@@ -75,7 +72,9 @@ class NoTransitionPageTransitionsBuilder extends PageTransitionsBuilder {
     Animation<double> secondaryAnimation,
     Widget child,
   ) {
-    // No transition effect, just return the child widget
-    return child;
+    return FadeTransition(
+      opacity: animation,
+      child: child,
+    );
   }
 }

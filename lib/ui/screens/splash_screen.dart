@@ -4,10 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:youbloom/const/assets.dart';
 import 'package:youbloom/const/colors.dart';
-import 'package:youbloom/const/text.dart';
 import 'package:youbloom/repositories/user_repository.dart';
-import 'package:percent_indicator/circular_percent_indicator.dart';
-import 'package:youbloom/ui/screens/login-screen.dart';
 import 'package:youbloom/ui/widgets/progress_indicator.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -39,8 +36,9 @@ class _SplashScreenState extends State<SplashScreen> {
                     // top: 30,
                     child: Image.asset(height: 40, Assets.lightSaber)),
                 Positioned(
-                  top:20.h,
-                  left: 86.w, child: const LightsaberLoadingIndicator()),
+                    top: 20.h,
+                    left: 86.w,
+                    child: const LightsaberLoadingIndicator()),
               ],
             ),
           )
@@ -52,7 +50,7 @@ class _SplashScreenState extends State<SplashScreen> {
       ),
       onInit: () async {},
       onAnimationEnd: () async {
-        final storage = new FlutterSecureStorage();
+        const storage = FlutterSecureStorage();
         String? token = await storage.read(key: 'accesstoken');
         // in case of real auth, check for existing token if not try to refresh if not possible, redirect to login screen
         if (token != null) {
@@ -78,7 +76,7 @@ class _SplashScreenState extends State<SplashScreen> {
         } else {
           Navigator.pushReplacementNamed(
             context,
-            '/home',
+            '/login',
           );
         }
       },

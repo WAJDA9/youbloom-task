@@ -4,8 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:youbloom/blocs/login_bloc/login_bloc.dart';
 import 'package:youbloom/const/colors.dart';
 import 'package:youbloom/const/globals.dart';
-import 'package:youbloom/const/text.dart';
-import 'package:youbloom/ui/screens/home_screen.dart';
 import 'package:youbloom/ui/widgets/fields/button_widget.dart';
 
 class CodeVerificationScreen extends StatefulWidget {
@@ -31,9 +29,8 @@ class _CodeVerificationScreenState extends State<CodeVerificationScreen> {
         ),
       ),
       body: BlocConsumer<LoginBloc, LoginState>(
-        listener: (context, state) {
+        listener: (context, state) async {
           if (state is AuthFailure) {
-            
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 showCloseIcon: true,
@@ -49,6 +46,7 @@ class _CodeVerificationScreenState extends State<CodeVerificationScreen> {
               ),
             );
           } else if (state is AuthSuccess) {
+            
             Navigator.pushReplacementNamed(context, '/home');
           }
         },
@@ -97,6 +95,22 @@ class _CodeVerificationScreenState extends State<CodeVerificationScreen> {
                   ),
                   SizedBox(height: 16.h),
                   TextField(
+                    cursorColor: AppColors.primaryColor,
+                    decoration: InputDecoration(
+                      contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 10),
+                      filled: true,
+                      fillColor: AppColors.fieldsColor,
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: const BorderSide(color: AppColors.primaryColor),
+                      ),
+                      enabled: true,
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: const BorderSide(color: AppColors.primaryColor),
+                      ),
+                    ),
                     controller: codeController,
                   ),
                   SizedBox(height: 16.h),

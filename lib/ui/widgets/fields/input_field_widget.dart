@@ -10,11 +10,11 @@ class TextFieldWidget extends StatefulWidget {
   final TextEditingController controller;
   final TextInputType? keyboardType;
   const TextFieldWidget({
-    Key? key,
+    super.key,
     required this.hintText,
     required this.controller,
     this.keyboardType = TextInputType.text,
-  }) : super(key: key);
+  });
 
   @override
   State<TextFieldWidget> createState() => _TextFieldWidgetState();
@@ -50,7 +50,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
-              borderSide: BorderSide(color: AppColors.primaryColor),
+              borderSide: const BorderSide(color: AppColors.primaryColor),
             ),
             hintText: widget.hintText,
             hintStyle: AppTextStyle.infoText,

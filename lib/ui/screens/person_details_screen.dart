@@ -8,30 +8,19 @@ import 'package:youbloom/models/person.dart';
 class GalacticProfileScreen extends StatelessWidget {
   final Person person;
 
-  const GalacticProfileScreen({Key? key, required this.person})
-      : super(key: key);
+  const GalacticProfileScreen({super.key, required this.person});
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: AppBar(
-        
-        backgroundColor: Colors.transparent,
-        forceMaterialTransparency: true,
-        automaticallyImplyLeading: false,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
-          onPressed: () => Navigator.pop(context),
-        ),
-      ),
       backgroundColor: Colors.black,
       body: Stack(
         children: [
           // Simple pattern background
           CustomPaint(
             painter: SimplePatternPainter(),
-            child: Container(
+            child: SizedBox(
               width: size.width,
               height: size.height,
             ),
@@ -42,13 +31,13 @@ class GalacticProfileScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  SizedBox(height: 20.h),
+                  SizedBox(height: 60.h),
                   _buildProfileImage(),
                   SizedBox(height: 20.h),
                   _buildNamePlate(),
                   SizedBox(height: 30.h),
                   _buildInfoCard(
-                      'Gender', person.gender.toString().split(".")[1]),
+                      'Gender', person.gender ?? 'Unknown'),
                   SizedBox(height: 10.h),
                   _buildInfoCard('Eye Color', person.eyeColor ?? 'Unknown'),
                   SizedBox(height: 10.h),
@@ -59,6 +48,14 @@ class GalacticProfileScreen extends StatelessWidget {
                   _buildInteractiveFeature(context),
                 ],
               ),
+            ),
+          ),
+          Positioned(
+            top: 10.h,
+            left: 20.w,
+            child: IconButton(
+              icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
+              onPressed: () => Navigator.pop(context),
             ),
           ),
         ],
@@ -133,7 +130,8 @@ class GalacticProfileScreen extends StatelessWidget {
           context: context,
           builder: (context) => AlertDialog(
             backgroundColor: Colors.black.withOpacity(0.8),
-            title: const Text('Galactic Fact', style: TextStyle(color: Colors.white)),
+            title: const Text('Galactic Fact',
+                style: TextStyle(color: Colors.white)),
             content: Text(
               'Did you know? If ${person.name} were a star, they would be a ${_getStarType()}!',
               style: const TextStyle(color: Colors.white70),
@@ -194,7 +192,6 @@ class SimplePatternPainter extends CustomPainter {
       canvas.drawLine(Offset(0, i), Offset(size.width, i), paint);
     }
 
-    
     final starPaint = Paint()..color = Colors.white.withOpacity(0.5);
     for (int i = 0; i < 50; i++) {
       double x = (DateTime.now().millisecond * i) % size.width;

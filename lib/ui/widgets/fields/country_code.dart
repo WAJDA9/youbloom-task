@@ -7,8 +7,7 @@ import 'package:youbloom/const/text.dart';
 class CountryCodeField extends StatefulWidget {
   final TextEditingController controller;
 
-  const CountryCodeField({Key? key, required this.controller})
-      : super(key: key);
+  const CountryCodeField({super.key, required this.controller});
 
   @override
   State<CountryCodeField> createState() => _CountryCodeFieldState();
@@ -63,7 +62,6 @@ class _CountryCodeFieldState extends State<CountryCodeField> {
           ),
           onCountryChanged: (phone) {
             widget.controller.text = phone.dialCode;
-            print(widget.controller.text);
           },
         ),
       ],
