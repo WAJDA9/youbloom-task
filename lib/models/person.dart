@@ -37,6 +37,25 @@ class Person {
     this.url,
   });
 
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is Person &&
+          runtimeType == other.runtimeType &&
+          name == other.name &&
+          gender == other.gender &&
+          eyeColor == other.eyeColor &&
+          hairColor == other.hairColor &&
+          skinColor == other.skinColor;
+
+  @override
+  int get hashCode =>
+      name.hashCode ^
+      gender.hashCode ^
+      eyeColor.hashCode ^
+      hairColor.hashCode ^
+      skinColor.hashCode;
+
   factory Person.fromRawJson(String str) => Person.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());

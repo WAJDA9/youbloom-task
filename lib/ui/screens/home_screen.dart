@@ -19,7 +19,8 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final ScrollController _scrollController = ScrollController();
   final TextEditingController _searchController = TextEditingController();
-  Timer? _debounce;
+  List<Person> _filteredPeople = [];
+
   @override
   void initState() {
     context.read<HomePageBloc>().add(FetchHomeScreenData());
@@ -29,35 +30,33 @@ class _HomeScreenState extends State<HomeScreen> {
               _scrollController.position.maxScrollExtent - 200 &&
           !context.read<HomePageBloc>().state.hasReachedMax &&
           context.read<HomePageBloc>().state is! HomePageLoading) {
-        
         context
             .read<HomePageBloc>()
             .add(FetchHomeScreenData(isInitialFetch: false));
       }
     });
 
-    _searchController.addListener(_onSearchChanged);
     super.initState();
   }
 
   @override
   void dispose() {
     _scrollController.dispose();
-    _searchController.removeListener(_onSearchChanged);
     _searchController.dispose();
-    _debounce?.cancel();
     super.dispose();
   }
 
-  void _onSearchChanged() {
-    if (_debounce?.isActive ?? false) _debounce?.cancel();
-
-    _debounce = Timer(const Duration(milliseconds: 500), () {
-      final query = _searchController.text.trim();
-      context
-          .read<HomePageBloc>()
-          .add(FetchHomeScreenData(isInitialFetch: true, searchQuery: query));
-    });
+  void _filterPeople(String query) {
+    final homePageState = context.read<HomePageBloc>().state;
+    if (homePageState is DataLoaded) {
+      setState(() {
+        _filteredPeople = homePageState.people
+            .where((person) =>
+                person.name?.toLowerCase().contains(query.toLowerCase()) ??
+                false)
+            .toList();
+      });
+    }
   }
 
   @override
@@ -76,6 +75,27 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
         centerTitle: true,
+        bottom: PreferredSize(
+          preferredSize: Size.fromHeight(60.h),
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+            child: TextField(
+              controller: _searchController,
+              onChanged: _filterPeople,
+              decoration: InputDecoration(
+                hintText: 'Search by name',
+                fillColor: Colors.white,
+                filled: true,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30.r),
+                  borderSide: BorderSide.none,
+                ),
+                prefixIcon: const Icon(Icons.search),
+                contentPadding: EdgeInsets.symmetric(vertical: 0),
+              ),
+            ),
+          ),
+        ),
       ),
       body: BlocConsumer<HomePageBloc, HomePageState>(
         listener: (context, state) {
@@ -86,6 +106,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 backgroundColor: Colors.red,
               ),
             );
+          } else if (state is DataLoaded) {
+            _filterPeople(_searchController.text);
           }
         },
         builder: (context, state) {
@@ -99,7 +121,10 @@ class _HomeScreenState extends State<HomeScreen> {
             );
           } else if (state is DataLoaded ||
               (state is HomePageLoading && state.people.isNotEmpty)) {
-            if (state.people.isEmpty) {
+            final displayedPeople =
+                _searchController.text.isEmpty ? state.people : _filteredPeople;
+
+            if (displayedPeople.isEmpty) {
               return const Center(
                 child: Text("No people found"),
               );
@@ -110,14 +135,15 @@ class _HomeScreenState extends State<HomeScreen> {
               child: ListView.separated(
                 controller: _scrollController,
                 shrinkWrap: true,
-                itemCount: state.hasReachedMax
-                    ? state.people.length
-                    : state.people.length + 1,
+                itemCount: displayedPeople.length +
+                    (state.hasReachedMax || _searchController.text.isNotEmpty
+                        ? 0
+                        : 1),
                 separatorBuilder: (context, index) => SizedBox(height: 8.h),
                 itemBuilder: (context, index) {
-                  if (index < state.people.length) {
-                    final player = state.people[index];
-                    return _buildpersonCard(player);
+                  if (index < displayedPeople.length) {
+                    final person = displayedPeople[index];
+                    return _buildpersonCard(person);
                   } else {
                     return const Center(
                       child: Padding(
